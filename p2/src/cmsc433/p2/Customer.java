@@ -9,12 +9,13 @@ import java.util.List;
  * table), place its order, and then leave the Ratsie's when the order is
  * complete.
  */
-public class Customer implements Runnable
+public class Customer extends Thread implements Runnable
 {
 	// JUST ONE SET OF IDEAS ON HOW TO SET THINGS UP...
 	private final String name;
 	private final List<Food> order;
-	private final int orderNum;
+
+	private int orderNum;
 
 	private static int runningCounter = 0;
 
@@ -34,6 +35,16 @@ public class Customer implements Runnable
 	{
 		return name;
 	}
+	
+	public List<Food> order()
+	{
+		return order;
+	}
+	
+	public int orderNum()
+	{
+		return orderNum;
+	}
 
 	/**
 	 * This method defines what an Customer does: The customer attempts to enter
@@ -43,6 +54,48 @@ public class Customer implements Runnable
 	public void run()
 	{
 		// YOUR CODE GOES HERE...
+		Simulation.events.add(SimulationEvent.customerStarting(this));
+		try
+		{
+			while(Simulation.occupied() >= Simulation.tables())
+			{
+				sleep(1);
+			}
+			Simulation.events.add(SimulationEvent.customerEnteredRatsies(this));
+			Simulation.incrementOccupied();
+			Simulation.placeOrder(order);
+			Simulation.events.add(SimulationEvent.customerPlacedOrder(this, order, orderNum));
+			wait();
+			Simulation.events.add(SimulationEvent.customerReceivedOrder(this, order, orderNum));
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		
+		// Customer ends
+		Simulation.decrementOccupied();
+		Simulation.events.add(SimulationEvent.customerLeavingRatsies(this));
 
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (!(o instanceof Customer))
+		{
+			return false;
+		}
+		else
+		{
+			if (((Customer) o).toString().equals(this.name))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }

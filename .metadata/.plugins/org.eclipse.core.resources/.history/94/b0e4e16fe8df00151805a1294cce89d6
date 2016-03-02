@@ -1,0 +1,44 @@
+package cmsc433.p2;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class Ratsies
+{
+	// Singleton Class
+	
+	private static Ratsies instance = new Ratsies();
+	private static int numSeats;
+	private static ArrayList<Cook> cooks;
+	private static ArrayList<Machine> machines;
+	private static ArrayList<Customer> customers;
+	private static HashMap<String, List<Food>> orders;
+	
+	protected Ratsies()
+	{
+		
+	}
+	
+	public static Ratsies getInstance()
+	{
+		return instance;
+	}
+	
+	public static void init(int s, int c, ArrayList<Machine> m)
+	{
+		numSeats = s;
+		cooks = new ArrayList<Cook>(c);
+		for (int i = 0; i < c; i++)
+		{
+			cooks.add(new Cook("Cook" + i));
+		}
+		machines = m;
+		orders = new HashMap<String, List<Food>>(numSeats);
+	}
+	
+	public synchronized void enter(Customer c)
+	{
+		
+	}
+}

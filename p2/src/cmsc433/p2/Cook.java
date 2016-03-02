@@ -1,14 +1,17 @@
 package cmsc433.p2;
 
+import java.util.List;
+
 /**
  * Cooks are simulation actors that have at least one field, a name. When
  * running, a cook attempts to retrieve outstanding orders placed by Eaters and
  * process them.
  */
-public class Cook implements Runnable
+public class Cook extends Thread implements Runnable 
 {
 	private final String name;
-
+	private List<Food> order;
+	
 	/**
 	 * You can feel free to modify this constructor. It must take at least the
 	 * name, but may take other parameters if you would find adding them useful.
@@ -23,6 +26,30 @@ public class Cook implements Runnable
 	public String toString()
 	{
 		return name;
+	}
+	
+	private void processOrder()
+	{
+		for (Food f: order)
+		{
+			switch (f.name)
+			{
+				case "soda":
+					Simulation.makeSoda();
+					break;
+				case "wings":
+					Simulation.makeWings();
+					break;
+				case "sub":
+					Simulation.makeSub();
+					break;
+				case "pizza":
+					Simulation.makePizza();
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	/**
@@ -44,10 +71,15 @@ public class Cook implements Runnable
 			while (true)
 			{
 				// YOUR CODE GOES HERE...
-				
+				while(Simulation.pullOrder() == null)
+				{
+					sleep(1);
+				}
+				order = Simulation.pullOrder();
+				processOrder();
+				notifyAll();
 				//TODO: remove after implementation
 				throw new InterruptedException();
-
 			}
 		}
 		catch (InterruptedException e)

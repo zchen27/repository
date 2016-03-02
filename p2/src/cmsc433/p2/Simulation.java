@@ -1,10 +1,14 @@
 package cmsc433.p2;
 
 import java.util.Collections;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import cmsc433.p2.Machine.MachineType;
 
 /**
  * Simulation is the main class used to run the simulation. You may add any
@@ -14,7 +18,7 @@ public class Simulation
 {
 	// List to track simulation events during simulation
 	public static List<SimulationEvent> events;
-
+	
 	/**
 	 * Used by other classes in the simulation to log events
 	 * 
@@ -25,7 +29,106 @@ public class Simulation
 		events.add(event);
 		System.out.println(event);
 	}
-
+	
+	private static Customer[] customers;
+	private static Cook[] cooks;
+	private static Machine fountain;
+	private static Machine fryer;
+	private static Machine grillpress;
+	private static Machine oven;
+	private static Deque<List<Food>> orders;
+	private static int tables;
+	private static int occupied;
+	
+	public static synchronized void incrementOccupied()
+	{
+		occupied++;
+	}
+	
+	public static synchronized void decrementOccupied()
+	{
+		occupied--;
+	}
+	
+	public static int occupied()
+	{
+		return occupied;
+	}
+	
+	public static int tables()
+	{
+		return tables;
+	}
+	
+	public static synchronized void placeOrder(List<Food> order)
+	{
+		orders.push(order);
+	}
+	
+	public static synchronized List<Food> pullOrder()
+	{
+		if (orders.size() > 0)
+		{
+			return orders.pop();
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	public static void makeSoda()
+	{
+		try
+		{
+			fountain.makeFood();
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void makeWings()
+	{
+		try
+		{
+			fryer.makeFood();
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void makeSub()
+	{
+		try
+		{
+			grillpress.makeFood();
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void makePizza()
+	{
+		try
+		{
+			oven.makeFood();
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Function responsible for performing the simulation. Returns a List of
 	 * SimulationEvent objects, constructed any way you see fit. This List will
@@ -156,6 +259,9 @@ public class Simulation
 		return events;
 	}
 
+	
+
+	
 	/**
 	 * Entry point for the simulation.
 	 *
@@ -169,23 +275,31 @@ public class Simulation
 	public static void main(String args[]) throws InterruptedException
 	{
 
-		if (args.length != 4)
+		/*if (args.length != 4)
 		{
 			System.err.println(
 					"usage: java Simulation <#customers> <#cooks> <#tables> <capacity> <randomorders");
 			System.exit(1);
-		}
+		}*/
 		
-		int numCustomers = new Integer(args[0]).intValue();
+		/*int numCustomers = new Integer(args[0]).intValue();
 		int numCooks = new Integer(args[1]).intValue();
 		int numTables = new Integer(args[2]).intValue();
 		int machineCapacity = new Integer(args[3]).intValue();
-		boolean randomOrders = new Boolean(args[4]);
+		boolean randomOrders = new Boolean(args[4]);*/
+		
 		int numCustomers = 10;
 		int numCooks = 1;
 		int numTables = 5;
 		int machineCapacity = 4;
 		boolean randomOrders = false;
+		
+		fountain = new Machine(MachineType.fountain, machineCapacity);
+		fryer = new Machine(MachineType.fryer, machineCapacity);
+		grillpress = new Machine(MachineType.grillPress, machineCapacity);
+		oven = new Machine(MachineType.oven, machineCapacity);
+		
+
 
 		// Run the simulation and then
 		// feed the result into the method to validate simulation.

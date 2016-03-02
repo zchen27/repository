@@ -42,6 +42,17 @@ public class Machine
 	public final MachineType machineType;
 	public final Food machineFoodType;
 	public final int capacity;
+	private int current;
+	
+	private synchronized void incrementCurrent()
+	{
+		current++;
+	}
+	
+	private synchronized void decrementCurrent()
+	{
+		current--;
+	}
 	
 	// YOUR CODE GOES HERE...
 
@@ -52,13 +63,34 @@ public class Machine
 	 * capacity; you must add code to make use of this field (and do whatever
 	 * initialization etc. you need).
 	 */
-	public Machine(MachineType machineType, Food food, int capacityIn)
+	public Machine(MachineType machineType, int capacityIn)
 	{
+		
 		this.machineType = machineType;
-		this.machineFoodType = food;
-		this.capacity = capacityIn;
+		switch (this.machineType)
+		{
+		case fountain:
+			this.machineFoodType = FoodType.soda;
+			break;
+		case fryer:
+			this.machineFoodType = FoodType.wings;
+			break;
+		case grillPress:
+			this.machineFoodType = FoodType.sub;
+			break;
+		case oven:
+			this.machineFoodType = FoodType.pizza;
+			break;
+		default:
+			//OMGWTFBBQ
+			this.machineFoodType = null;
+			break;
+		}
 
 		// YOUR CODE GOES HERE...
+		this.capacity = capacityIn;
+		current = 0;
+		Simulation.events.add(SimulationEvent.machineStarting(this, machineFoodType, capacityIn));
 
 	}
 
@@ -74,25 +106,40 @@ public class Machine
 	public Object makeFood() throws InterruptedException
 	{
 		// YOUR CODE GOES HERE...
-		
+		new CookAnItem(machineFoodType).run();
 		//TODO: Remove after implementation
-		return null;
+		return machineFoodType;
 	}
 
 	// THIS MIGHT BE A USEFUL METHOD TO HAVE AND USE BUT IS JUST ONE IDEA
-	private class CookAnItem implements Runnable
+	private class CookAnItem extends Thread implements Runnable
 	{
+		public final Food food;
+		
+		private CookAnItem(Food f)
+		{
+			this.food = f;
+		}
+		
 		public void run()
 		{
 			try
 			{
 				// YOUR CODE GOES HERE...
-				
-				//TODO: Remove after implementation
-				throw new InterruptedException();
+				while (current >= capacity)
+				{
+					wait();
+				}	
+				incrementCurrent();
+				sleep(food.cookTimeS);
+				decrementCurrent();
+				notifyAll();
+				//TODO: Remove after implementation	
 			}
 			catch (InterruptedException e)
 			{
+				//Something went seriously wrong
+				e.printStackTrace();
 			}
 		}
 	}
