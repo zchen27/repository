@@ -57,13 +57,11 @@ public class Customer extends Thread implements Runnable
 		// YOUR CODE GOES HERE...
 		try
 		{
-			Simulation.logEvent(SimulationEvent.customerStarting(this));
 			sim.sitDown();
 			Simulation.logEvent(SimulationEvent.customerEnteredRatsies(this));
 			sim.placeOrder(order, orderNum);
 			Simulation.logEvent(SimulationEvent.customerPlacedOrder(this, order, orderNum));
 			sim.demandFood(orderNum);
-			Simulation.logEvent(SimulationEvent.customerReceivedOrder(this, order, orderNum));
 			sim.getUp();
 			Simulation.logEvent(SimulationEvent.customerLeavingRatsies(this));
 		}

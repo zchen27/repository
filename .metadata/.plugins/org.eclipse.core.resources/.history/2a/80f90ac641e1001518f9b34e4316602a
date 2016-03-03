@@ -71,7 +71,6 @@ public class Cook extends Thread implements Runnable
 	{
 		try
 		{
-			Simulation.logEvent(SimulationEvent.cookStarting(this));
 			while (true)
 			{
 				// YOUR CODE GOES HERE...

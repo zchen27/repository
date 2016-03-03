@@ -104,12 +104,8 @@ public class Machine
 	public Object makeFood() throws InterruptedException
 	{
 		// YOUR CODE GOES HERE...
-		while(current >= capacity)
-		{
-		}
-		Simulation.logEvent(SimulationEvent.machineDoneFood(this, machineFoodType));
-		new CookAnItem(machineFoodType).start();
-		Simulation.logEvent(SimulationEvent.machineDoneFood(this, machineFoodType));
+			new CookAnItem(machineFoodType).start();
+			Simulation.logEvent(SimulationEvent.machineDoneFood(this, machineFoodType));
 		//TODO: Remove after implementation
 		return machineFoodType;
 	}
@@ -130,9 +126,17 @@ public class Machine
 			try
 			{
 				// YOUR CODE GOES HERE...
-				incrementCurrent();
-				sleep(food.cookTimeS);
-				decrementCurrent();
+				synchronized (this)
+				{
+					while (current >= capacity)
+					{
+						wait();
+					}
+					incrementCurrent();
+					sleep(food.cookTimeS);
+					decrementCurrent();
+					notifyAll();
+				}
 				//TODO: Remove after implementation	
 			}
 			catch (InterruptedException e)
