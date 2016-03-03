@@ -14,6 +14,7 @@ public class Customer extends Thread implements Runnable
 	// JUST ONE SET OF IDEAS ON HOW TO SET THINGS UP...
 	private final String name;
 	private final List<Food> order;
+	private Simulation sim = Simulation.getInstance();
 
 	private int orderNum;
 
@@ -54,19 +55,15 @@ public class Customer extends Thread implements Runnable
 	public void run()
 	{
 		// YOUR CODE GOES HERE...
-		Simulation.events.add(SimulationEvent.customerStarting(this));
 		try
 		{
-			while(Simulation.occupied() >= Simulation.tables())
-			{
-				sleep(1);
-			}
-			Simulation.events.add(SimulationEvent.customerEnteredRatsies(this));
-			Simulation.incrementOccupied();
-			Simulation.placeOrder(order);
-			Simulation.events.add(SimulationEvent.customerPlacedOrder(this, order, orderNum));
-			wait();
-			Simulation.events.add(SimulationEvent.customerReceivedOrder(this, order, orderNum));
+			sim.sitDown();
+			Simulation.logEvent(SimulationEvent.customerEnteredRatsies(this));
+			sim.placeOrder(order, orderNum);
+			Simulation.logEvent(SimulationEvent.customerPlacedOrder(this, order, orderNum));
+			sim.demandFood(orderNum);
+			sim.getUp();
+			Simulation.logEvent(SimulationEvent.customerLeavingRatsies(this));
 		}
 		catch (InterruptedException e)
 		{
@@ -74,9 +71,6 @@ public class Customer extends Thread implements Runnable
 		}
 		
 		// Customer ends
-		Simulation.decrementOccupied();
-		Simulation.events.add(SimulationEvent.customerLeavingRatsies(this));
-
 	}
 	
 	@Override

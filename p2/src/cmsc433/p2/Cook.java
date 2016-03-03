@@ -10,7 +10,9 @@ import java.util.List;
 public class Cook extends Thread implements Runnable 
 {
 	private final String name;
+	private int num;
 	private List<Food> order;
+	private Simulation sim = Simulation.getInstance();
 	
 	/**
 	 * You can feel free to modify this constructor. It must take at least the
@@ -32,24 +34,27 @@ public class Cook extends Thread implements Runnable
 	{
 		for (Food f: order)
 		{
+			Simulation.logEvent(SimulationEvent.cookStartedFood(this, f, num));
 			switch (f.name)
 			{
 				case "soda":
-					Simulation.makeSoda();
+					sim.makeSoda();
 					break;
 				case "wings":
-					Simulation.makeWings();
+					sim.makeWings();
 					break;
 				case "sub":
-					Simulation.makeSub();
+					sim.makeSub();
 					break;
 				case "pizza":
-					Simulation.makePizza();
+					sim.makePizza();
 					break;
 				default:
 					break;
 			}
+			Simulation.logEvent(SimulationEvent.cookFinishedFood(this, f, num));
 		}
+		sim.readyOrder(num);
 	}
 
 	/**
@@ -64,22 +69,18 @@ public class Cook extends Thread implements Runnable
 	 */
 	public void run()
 	{
-
-		Simulation.logEvent(SimulationEvent.cookStarting(this));
 		try
 		{
 			while (true)
 			{
 				// YOUR CODE GOES HERE...
-				while(Simulation.pullOrder() == null)
-				{
-					sleep(1);
-				}
-				order = Simulation.pullOrder();
+				num = sim.pullOrder();
+				Simulation.logEvent(SimulationEvent.cookReceivedOrder(this, order, num));
+				order = sim.lookUp(num);
 				processOrder();
-				notifyAll();
+				sim.readyOrder(num);
+				Simulation.logEvent(SimulationEvent.cookCompletedOrder(this, num));
 				//TODO: remove after implementation
-				throw new InterruptedException();
 			}
 		}
 		catch (InterruptedException e)
