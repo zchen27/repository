@@ -9,6 +9,10 @@ import java.util.List;
  * table), place its order, and then leave the Ratsie's when the order is
  * complete.
  */
+/**
+ * @author Me
+ *
+ */
 public class Customer extends Thread implements Runnable
 {
 	// JUST ONE SET OF IDEAS ON HOW TO SET THINGS UP...
@@ -24,6 +28,8 @@ public class Customer extends Thread implements Runnable
 	 * You can feel free modify this constructor. It must take at least the name
 	 * and order but may take other parameters if you would find adding them
 	 * useful.
+	 * @param name
+	 * @param order
 	 */
 	public Customer(String name, List<Food> order)
 	{
@@ -32,16 +38,25 @@ public class Customer extends Thread implements Runnable
 		this.orderNum = ++runningCounter;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#toString()
+	 */
 	public String toString()
 	{
 		return name;
 	}
 	
+	/**
+	 * @return
+	 */
 	public List<Food> order()
 	{
 		return order;
 	}
 	
+	/**
+	 * @return
+	 */
 	public int orderNum()
 	{
 		return orderNum;
@@ -52,20 +67,18 @@ public class Customer extends Thread implements Runnable
 	 * the Ratsie's (only successful when the Ratsie's has a free table), place
 	 * its order, and then leave the Ratsie's when the order is complete.
 	 */
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run()
 	{
 		// YOUR CODE GOES HERE...
 		try
 		{
-			Simulation.logEvent(SimulationEvent.customerStarting(this));
-			sim.sitDown();
-			Simulation.logEvent(SimulationEvent.customerEnteredRatsies(this));
-			sim.placeOrder(order, orderNum);
-			Simulation.logEvent(SimulationEvent.customerPlacedOrder(this, order, orderNum));
-			sim.demandFood(orderNum);
-			Simulation.logEvent(SimulationEvent.customerReceivedOrder(this, order, orderNum));
-			sim.getUp();
-			Simulation.logEvent(SimulationEvent.customerLeavingRatsies(this));
+			sim.sitDown(this);
+			sim.placeOrder(this);
+			sim.demandFood(this);
+			sim.getUp(this);
 		}
 		catch (InterruptedException e)
 		{
@@ -75,6 +88,9 @@ public class Customer extends Thread implements Runnable
 		// Customer ends
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o)
 	{

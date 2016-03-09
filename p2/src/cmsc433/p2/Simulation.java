@@ -3,6 +3,7 @@ package cmsc433.p2;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +14,10 @@ import cmsc433.p2.Machine.MachineType;
 /**
  * Simulation is the main class used to run the simulation. You may add any
  * fields (static or instance) or any methods you wish.
+ */
+/**
+ * @author Me
+ *
  */
 public class Simulation
 {
@@ -49,58 +54,92 @@ public class Simulation
 	private static Machine grillpress;
 	private static Machine oven;
 	private static LinkedList<Integer> orders;
-	private static ArrayList<Integer> ready;
+	private static HashSet<Integer> ready;
 	private static HashMap<Integer, List<Food>> orderContents;
 	private static int capacity;
 	private static int tables;
 	private static int occupied;
 	
+	/**
+	 * @return
+	 */
 	public int occupied()
 	{
 		return occupied;
 	}
 	
+	/**
+	 * @return
+	 */
 	public int tables()
 	{
 		return tables;
 	}
 	
-	public synchronized void sitDown() throws InterruptedException
+	/**
+	 * @param c
+	 * @throws InterruptedException
+	 */
+	public synchronized void sitDown(Customer c) throws InterruptedException
 	{
 		while (occupied >= tables)
 		{
 			wait();
 		}
+		logEvent(SimulationEvent.customerEnteredRatsies(c));
 		occupied++;
 	}
 	
-	public synchronized void getUp()
+	/**
+	 * @param c
+	 */
+	public synchronized void getUp(Customer c)
 	{
 		occupied--;
+		logEvent(SimulationEvent.customerLeavingRatsies(c));
 		notifyAll();
 	}
 	
-	public synchronized void placeOrder(List<Food> order, int orderNumber)
+	/**
+	 * @param c
+	 */
+	public synchronized void placeOrder(Customer c)
 	{
-		orders.push(orderNumber);
-		orderContents.put(orderNumber, order);
+		orders.push(c.orderNum());
+		orderContents.put(c.orderNum(), c.order());
+		notifyAll();
+		logEvent(SimulationEvent.customerPlacedOrder(c, c.order(), c.orderNum()));
+	}
+	
+	/**
+	 * @param c
+	 */
+	public synchronized void readyOrder(Cook c)
+	{
+		ready.add(c.orderNum());
+		logEvent(SimulationEvent.cookCompletedOrder(c, c.orderNum()));
 		notifyAll();
 	}
 	
-	public synchronized void readyOrder(int orderID)
+	/**
+	 * @param c
+	 * @throws InterruptedException
+	 */
+	public synchronized void demandFood(Customer c) throws InterruptedException
 	{
-		ready.add(orderID);
-		notifyAll();
-	}
-	
-	public synchronized void demandFood(int orderID) throws InterruptedException
-	{
-		while(!ready.contains(orderID))
+		while(!ready.contains(c.orderNum()))
 		{
 			wait();
 		}
+		ready.remove(c.orderNum());
+		notifyAll();
+		logEvent(SimulationEvent.customerReceivedOrder(c, c.order(), c.orderNum()));
 	}
 	
+	/**
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public synchronized int pullOrder() throws InterruptedException
 	{
 		while (orders.size() <= 0)
@@ -108,19 +147,29 @@ public class Simulation
 			wait();
 		}
 		notifyAll();
-		return orders.pop();
+		int i = orders.poll();
+		return i;
 	}
 	
-	public List<Food> lookUp(int num)
+	/**
+	 * @param c
+	 * @return
+	 */
+	public List<Food> lookUp(Cook c)
 	{
-		return orderContents.get(num);
+		logEvent(SimulationEvent.cookReceivedOrder(c, orderContents.get(c.orderNum()), c.orderNum()));
+		return orderContents.get(c.orderNum());
 	}
 	
-	public void makeSoda()
+	/**
+	 * @param c
+	 */
+	public void makeSoda(Cook c)
 	{
 		try
 		{
-			fountain.makeFood();
+			logEvent(SimulationEvent.cookStartedFood(c, FoodType.soda, c.orderNum()));
+			fountain.makeFood(c.name());
 		}
 		catch (InterruptedException e)
 		{
@@ -129,11 +178,15 @@ public class Simulation
 		}
 	}
 	
-	public void makeWings()
+	/**
+	 * @param c
+	 */
+	public void makeWings(Cook c)
 	{
 		try
 		{
-			fryer.makeFood();
+			logEvent(SimulationEvent.cookStartedFood(c, FoodType.wings, c.orderNum()));
+			fryer.makeFood(c.name());
 		}
 		catch (InterruptedException e)
 		{
@@ -142,11 +195,15 @@ public class Simulation
 		}
 	}
 	
-	public void makeSub()
+	/**
+	 * @param c
+	 */
+	public void makeSub(Cook c)
 	{
 		try
 		{
-			grillpress.makeFood();
+			logEvent(SimulationEvent.cookStartedFood(c, FoodType.sub, c.orderNum()));
+			grillpress.makeFood(c.name());
 		}
 		catch (InterruptedException e)
 		{
@@ -155,11 +212,85 @@ public class Simulation
 		}
 	}
 	
-	public void makePizza()
+	/**
+	 * @param c
+	 */
+	public void makePizza(Cook c)
 	{
 		try
 		{
-			oven.makeFood();
+			logEvent(SimulationEvent.cookStartedFood(c, FoodType.pizza, c.orderNum()));
+			oven.makeFood(c.name());
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param c
+	 */
+	public void grabSoda(Cook c)
+	{
+		try
+		{
+			fountain.grabFood(c.name());
+			logEvent(SimulationEvent.cookFinishedFood(c, FoodType.soda, c.orderNum()));
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param c
+	 */
+	public void grabWings(Cook c)
+	{
+		try
+		{
+			fryer.grabFood(c.name());
+			logEvent(SimulationEvent.cookFinishedFood(c, FoodType.wings, c.orderNum()));
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param c
+	 */
+	public void grabSub(Cook c)
+	{
+		try
+		{
+			grillpress.grabFood(c.name());
+			logEvent(SimulationEvent.cookFinishedFood(c, FoodType.sub, c.orderNum()));
+
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param c
+	 */
+	public void grabPizza(Cook c)
+	{
+		try
+		{
+			oven.grabFood(c.name());
+			logEvent(SimulationEvent.cookFinishedFood(c, FoodType.pizza, c.orderNum()));
+
 		}
 		catch (InterruptedException e)
 		{
@@ -213,7 +344,7 @@ public class Simulation
 		occupied = 0;
 		orders = new LinkedList<Integer>();
 		orderContents = new HashMap<Integer, List<Food>>();
-		ready = new ArrayList<Integer>();
+		ready = new HashSet<Integer>();
 		
 		// Start up machines
 		fountain = new Machine(MachineType.fountain, machineCapacity);
@@ -221,16 +352,18 @@ public class Simulation
 		grillpress = new Machine(MachineType.grillPress, machineCapacity);
 		oven = new Machine(MachineType.oven, machineCapacity);
 		capacity = machineCapacity;
-		logEvent(SimulationEvent.machineStarting(fountain, FoodType.soda, capacity));
-		logEvent(SimulationEvent.machineStarting(fryer, FoodType.wings, capacity));
-		logEvent(SimulationEvent.machineStarting(grillpress, FoodType.sub, capacity));
-		logEvent(SimulationEvent.machineStarting(oven, FoodType.pizza, capacity));
+
+		fountain.init();
+		fryer.init();
+		grillpress.init();
+		oven.init();
 		
 		// Let cooks in
 		for (int i = 0; i < cooks.length; i++)
 		{
 			cooks[i] = new Cook("Cook" + i);
 			cooks[i].start();
+			logEvent(SimulationEvent.cookStarting(cooks[i]));
 		}
 		
 		
@@ -286,6 +419,7 @@ public class Simulation
 		for (int i = 0; i < customers.length; i++)
 		{
 			customers[i].start();
+			logEvent(SimulationEvent.customerStarting(customers[i]));
 			// NOTE: Starting the customer does NOT mean they get to go
 			// right into the shop. There has to be a table for
 			// them. The Customer class' run method has many jobs
@@ -309,6 +443,12 @@ public class Simulation
 				cooks[i].interrupt();
 			for (int i = 0; i < cooks.length; i++)
 				cooks[i].join();
+			
+			fountain.halt();
+			fryer.halt();
+			grillpress.halt();
+			oven.halt();
+			
 
 		}
 		catch (InterruptedException e)
@@ -354,15 +494,15 @@ public class Simulation
 		boolean randomOrders = new Boolean(args[4]);*/
 		Random r = new Random();
 		int numCustomers = 10;
-		int numCooks = 1;
+		int numCooks = 2;
 		int numTables = 5;
 		int machineCapacity = 4;
 		boolean randomOrders = true;
 		
-		//numCustomers = r.nextInt(100) + 1;
-		//numCooks = r.nextInt(10) + 1;
-		//numTables = r.nextInt(50) + 1;
-		//machineCapacity = r.nextInt(50) + 1;
+		/*numCustomers = r.nextInt(100) + 1;
+		numCooks = r.nextInt(10) + 1;
+		numTables = r.nextInt(50) + 1;
+		machineCapacity = r.nextInt(50) + 1;*/
 		//machineCapacity = 1;
 		
 		/*for (int i = 0; i < 200; i++)

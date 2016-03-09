@@ -1,5 +1,6 @@
 package cmsc433.p2;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -7,10 +8,15 @@ import java.util.List;
  * running, a cook attempts to retrieve outstanding orders placed by Eaters and
  * process them.
  */
+/**
+ * @author Me
+ *
+ */
 public class Cook extends Thread implements Runnable 
 {
 	private final String name;
-	private int num;
+	private int orderNum;
+	
 	private List<Food> order;
 	private Simulation sim = Simulation.getInstance();
 	
@@ -25,37 +31,69 @@ public class Cook extends Thread implements Runnable
 		this.name = name;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#toString()
+	 */
 	public String toString()
 	{
 		return name;
 	}
 	
+	
+	/**
+	 * 
+	 */
 	private void processOrder()
 	{
 		for (Food f: order)
 		{
-			Simulation.logEvent(SimulationEvent.cookStartedFood(this, f, num));
-			switch (f.name)
+			switch(f.name)
 			{
 				case "soda":
-					sim.makeSoda();
+					sim.makeSoda(this);
 					break;
 				case "wings":
-					sim.makeWings();
+					sim.makeWings(this);
 					break;
 				case "sub":
-					sim.makeSub();
+					sim.makeSub(this);
 					break;
 				case "pizza":
-					sim.makePizza();
+					sim.makePizza(this);
 					break;
 				default:
 					break;
 			}
-			Simulation.logEvent(SimulationEvent.cookFinishedFood(this, f, num));
 		}
-		sim.readyOrder(num);
 	}
+	
+	/**
+	 * 
+	 */
+	private void grabOrder()
+	{
+		for (Food f: order)
+		{
+			switch (f.name)
+			{
+				case "soda":
+					sim.grabSoda(this);
+					break;
+				case "wings":
+					sim.grabWings(this);
+					break;
+				case "sub":
+					sim.grabSub(this);
+					break;
+				case "pizza":
+					sim.grabPizza(this);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	
 
 	/**
 	 * This method executes as follows. The cook tries to retrieve orders placed
@@ -67,20 +105,22 @@ public class Cook extends Thread implements Runnable
 	 * calls the interrupt() method on it, which could raise
 	 * InterruptedException if the cook is blocking), then it terminates.
 	 */
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run()
 	{
 		try
 		{
-			Simulation.logEvent(SimulationEvent.cookStarting(this));
 			while (true)
 			{
 				// YOUR CODE GOES HERE...
-				num = sim.pullOrder();
-				Simulation.logEvent(SimulationEvent.cookReceivedOrder(this, order, num));
-				order = sim.lookUp(num);
+				//System.out.println("live");
+				orderNum = sim.pullOrder();
+				order = sim.lookUp(this);
 				processOrder();
-				sim.readyOrder(num);
-				Simulation.logEvent(SimulationEvent.cookCompletedOrder(this, num));
+				grabOrder();
+				sim.readyOrder(this);
 				//TODO: remove after implementation
 			}
 		}
@@ -90,7 +130,24 @@ public class Cook extends Thread implements Runnable
 			// that interrupts each cook thread when all customers are done.
 			// You might need to change this if you change how things are
 			// done in the Simulation class.
+			//System.out.println("Cook stopping!");
 			Simulation.logEvent(SimulationEvent.cookEnding(this));
 		}
+	}
+	
+	/**
+	 * @return
+	 */
+	public String name()
+	{
+		return name;
+	}
+	
+	/**
+	 * @return
+	 */
+	public int orderNum()
+	{
+		return orderNum;
 	}
 }

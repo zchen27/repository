@@ -1,5 +1,7 @@
 package cmsc433.p2;
 
+import java.awt.Event;
+import java.util.ArrayList;
 import java.util.List;
 
 import cmsc433.p2.SimulationEvent;
@@ -39,15 +41,18 @@ public class Validate
 	 */
 	public static boolean validateSimulation(List<SimulationEvent> events)
 	{
+
 		try
 		{
+
 			check(events
 					.get(0).event == SimulationEvent.EventType.SimulationStarting,
 					"Simulation didn't start with initiation event");
+			checkCustomers(events);
 			check(events.get(events.size()
 					- 1).event == SimulationEvent.EventType.SimulationEnded,
 					"Simulation didn't end with termination event");
-
+			
 			/*
 			 * In P2 you will write validation code for things such as: Should
 			 * not have more eaters than specified Should not have more cooks
@@ -63,6 +68,94 @@ public class Validate
 		catch (InvalidSimulationException e)
 		{
 			return false;
+		}
+	}
+
+	private static void checkCustomers(List<SimulationEvent> events)
+			throws InvalidSimulationException
+	{
+		ArrayList<Customer> active = new ArrayList<Customer>();
+		ArrayList<Customer> sit = new ArrayList<Customer>();
+		ArrayList<Customer> place = new ArrayList<Customer>();
+		ArrayList<Customer> receive = new ArrayList<Customer>();
+		ArrayList<Customer> left = new ArrayList<Customer>();
+
+		SimulationEvent start = events.get(0);
+		int seats = start.simParams[2];
+
+		for (int i = 0; i < events.size(); i++)
+		{
+			SimulationEvent e = events.get(i);
+			String n;
+			if (e.event == SimulationEvent.EventType.CustomerStarting)
+			{
+				n = e.customer.getName();
+				check(i != 0,
+						n + "Where did you come from? Simulation not started");
+				check(!active.contains(e.customer),
+						n + "Please get rid of your evil doppelgaenger");
+				check(!sit.contains(e.customer),
+						n + "No, you may not find another seat");
+				check(!place.contains(e.customer),
+						n + "Don't move. Our waiters won't hunt you down.");
+				check(!receive.contains(e.customer),
+						n + "You don't enough neurons to walk while eating.");
+				check(!left.contains(e.customer), "Don't. Come. Back.");
+				active.add(e.customer);
+			}
+			else if (e.event == SimulationEvent.EventType.CustomerEnteredRatsies)
+			{
+				n = e.customer.getName();
+				check(active.contains(e.customer),n + "You don't exist yet.");
+				check(sit.size() < seats, n + "Do not sit on other people's laps.");
+				check(!sit.contains(e.customer),
+						n + "No, you may not find another seat");
+				check(!place.contains(e.customer),
+						n + "Don't move. Our waiters won't hunt you down.");
+				check(!receive.contains(e.customer),
+						n + "You don't enough neurons to walk while eating.");
+				check(!left.contains(e.customer), "Don't. Come. Back.");
+				sit.add(e.customer);
+			}
+			else if (e.event == SimulationEvent.EventType.CustomerPlacedOrder)
+			{
+				n = e.customer.getName();
+				check(active.contains(e.customer), n + "You don't exist yet.");
+				check(sit.contains(e.customer), n + "We don't do phone order.");
+				check(!place.contains(e.customer),
+						n + "Stop ordering. We know already.");
+				check(!receive.contains(e.customer),
+						n + "No. We are busy. No second orders.");
+				check(!left.contains(e.customer),
+						n + "Uh... You already left. No phone orders");
+				place.add(e.customer);
+			}
+			else if (e.event == SimulationEvent.EventType.CustomerReceivedOrder)
+			{
+				n = e.customer.getName();
+				check(active.contains(e.customer), n + "You don't exist yet.");
+				check(sit.contains(e.customer), n + "We don't do phone order.");
+				check(place.contains(e.customer), n + "Stealing is bad.");
+				check(!receive.contains(e.customer),
+						n + "Stealing is bad. Especially when you are already eating.");
+				check(!left.contains(e.customer),
+						n + "Uh... You already left. Telekinesis is banned.");
+				place.remove(e.customer);
+				receive.add(e.customer);
+			}
+			else if (e.event == SimulationEvent.EventType.CustomerLeavingRatsies)
+			{
+				n = e.customer.getName();
+				check(active.contains(e.customer), n + "You don't exist yet.");
+				check(sit.contains(e.customer), n + "We don't do phone order.");
+				check(!place.contains(e.customer),
+						n + "Aren't you gonna wait?");
+				check(receive.contains(e.customer),
+						n + "Were are you going? Aren't you going to eat?");
+				check(!left.contains(e.customer), n + "Uh... You already left...");
+				sit.remove(e.customer);
+				left.add(e.customer);
+			}
 		}
 	}
 }
