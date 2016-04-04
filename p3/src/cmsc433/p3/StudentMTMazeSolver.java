@@ -1,7 +1,8 @@
 package cmsc433.p3;
 
 import java.util.List;
-import 
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveTask;
 
 /**
  * This file needs to hold your solver to be tested. 
@@ -22,5 +23,17 @@ public class StudentMTMazeSolver extends SkippingMazeSolver
     {
         // TODO: Implement your code here
         throw new RuntimeException("Not yet implemented!");
+    }
+    
+    public class MazeSolve extends RecursiveTask
+    {
+
+		@Override
+		protected Object compute()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+    	
     }
 }

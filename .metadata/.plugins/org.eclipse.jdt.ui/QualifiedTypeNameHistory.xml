@@ -11,4 +11,5 @@
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="cmsc433.p2.SimulationEvent.EventType"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ForkJoinPool"/>
 </qualifiedTypeNameHistroy>
