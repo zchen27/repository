@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="package cmsc433.p3;"/>
 			<item value="leaving Ratsies"/>
 			<item value="Exce"/>
 			<item value="in"/>
@@ -15,7 +16,6 @@
 			<item value="Exceptio"/>
 			<item value="pop()"/>
 			<item value="- "/>
-			<item value="Failed"/>
 		</list>
 		<list key="replacehistory">
 			<item value="poll()"/>

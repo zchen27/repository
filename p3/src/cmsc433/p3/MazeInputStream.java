@@ -8,19 +8,24 @@ import java.io.ObjectStreamClass;
 /**
  * This class is needed to deserialize legacy files.
  */
-public class MazeInputStream extends ObjectInputStream {
+public class MazeInputStream extends ObjectInputStream
+{
 
-	public MazeInputStream(InputStream in) throws IOException {
+	public MazeInputStream(InputStream in) throws IOException
+	{
 		super(in);
 	}
-	
+
 	@Override
-	protected ObjectStreamClass readClassDescriptor() throws IOException, ClassNotFoundException {
-	    ObjectStreamClass desc = super.readClassDescriptor();
-	    if (desc.getName().equals("cmsc433_p4.Maze")) {
-	        return ObjectStreamClass.lookup(cmsc433.p3.Maze.class);
-	    }
-	    return desc;
+	protected ObjectStreamClass readClassDescriptor()
+			throws IOException, ClassNotFoundException
+	{
+		ObjectStreamClass desc = super.readClassDescriptor();
+		if (desc.getName().equals("cmsc433_p4.Maze"))
+		{
+			return ObjectStreamClass.lookup(cmsc433.p3.Maze.class);
+		}
+		return desc;
 	};
 
 }

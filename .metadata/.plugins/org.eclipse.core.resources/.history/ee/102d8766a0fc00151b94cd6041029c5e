@@ -1,0 +1,55 @@
+package cmsc433.p3;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveTask;
+
+/**
+ * This file needs to hold your solver to be tested. 
+ * You can alter the class to extend any class that extends MazeSolver.
+ * It must have a constructor that takes in a Maze.
+ * It must have a solve() method that returns the datatype List<Direction>
+ *   which will either be a reference to a list of steps to take or will
+ *   be null if the maze cannot be solved.
+ */
+public class StudentMTMazeSolver extends SkippingMazeSolver
+{
+	
+	private HashSet<Position> wrap;
+	
+	private class MazeSolveTask extends RecursiveTask<List<Direction>>
+	{
+		
+		@Override
+		protected List<Direction> compute()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		private List<Direction> solveLinear(Position p)
+		{
+			return null;
+		}
+		
+	}
+	
+	public StudentMTMazeSolver(Maze maze)
+	{
+		super(maze);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<Direction> solve()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    
+ }

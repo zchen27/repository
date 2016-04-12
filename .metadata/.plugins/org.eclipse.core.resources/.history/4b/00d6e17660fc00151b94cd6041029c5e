@@ -1,0 +1,21 @@
+package cmsc433.p3;
+
+import java.util.List;
+
+public class StudentSTMazeSolver extends SkippingMazeSolver
+{
+
+	public StudentSTMazeSolver(Maze maze)
+	{
+		super(maze);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<Direction> solve()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,146 @@
+package cmsc433.p3;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveTask;
+
+/**
+ * This file needs to hold your solver to be tested. 
+ * You can alter the class to extend any class that extends MazeSolver.
+ * It must have a constructor that takes in a Maze.
+ * It must have a solve() method that returns the datatype List<Direction>
+ *   which will either be a reference to a list of steps to take or will
+ *   be null if the maze cannot be solved.
+ */
+public class StudentMTMazeSolver extends MazeSolver
+{
+	
+	private ConcurrentHashMap<Integer, Position> marked;
+	private int threshold;
+	
+	
+	private class MazeSolveTask extends RecursiveTask<List<Direction>>
+	{
+		
+		private Position current;
+		private int iter;
+		
+		public MazeSolveTask(Position p, int iter)
+		{
+			this.current = p;
+			this.iter = iter;
+		}
+		
+		@Override
+		protected LinkedList<Direction> compute()
+		{
+			if (iter < threshold)
+			{
+				return computeParallel(current);
+			}
+			else
+			{
+				return computeLinear(current);
+			}
+		}
+		
+		private LinkedList<Direction>computeParallel(Position p)
+		{
+			if (maze.getEnd().equals(p))
+			{
+				return new LinkedList<Direction>();
+			}
+			
+			//Creates a list of tasks to start
+			marked.put(p.hashCode(), p);
+			List<Direction> ds = maze.getMoves(p);
+			List<MazeSolveTask> tasks = new ArrayList<MazeSolveTask>();
+			List<LinkedList<Direction>> results = new ArrayList<LinkedList<Direction>>();
+			for (Direction d: ds)
+			{
+				if(!marked.containsKey(p.move(d).hashCode()))
+				{
+					tasks.add(new MazeSolveTask(p, iter + 1));
+				}
+			}
+			
+			//Start all tasks
+			for (int i = 0; i < tasks.size(); i++)
+			{
+				tasks.get(i).fork();
+			}
+			
+			//Join all tasks
+			for (int i = 0; i < tasks.size(); i++)
+			{
+				results.add((LinkedList<Direction>) tasks.get(i).join());
+			}
+			
+			//Return a path if there is one
+			for (int i = 0; i < results.size(); i++)
+			{
+				if (results.get(i) != null)
+				{
+					return results.get(i);
+				}
+			}
+			
+			//No paths left
+			return null;
+		}
+		
+		private LinkedList<Direction>computeLinear(Position n)
+		{
+			if (maze.getEnd().equals(n))
+			{
+				return new LinkedList<Direction>();
+			}
+			else
+			{
+				marked.put(n.hashCode(),n);
+				List<Direction> ds = maze.getMoves(n);
+				for (Direction d: ds)
+				{
+					Position next = n.move(d);
+					if (!marked.containsKey(next.hashCode()))
+					{
+						LinkedList<Direction> path = computeLinear(next);
+						if (path != null)
+						{
+							path.addFirst(d);
+							return path;
+						}
+					}
+				}
+			}
+			return null; //No Solution exists
+		}
+		
+	}
+	
+	public StudentMTMazeSolver(Maze maze)
+	{
+		super(maze);
+		marked = new ConcurrentHashMap<Integer, Position>();
+		threshold = (int) Math.log(Math.min(maze.getWidth(), maze.getHeight()));
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<Direction> solve()
+	{
+		// TODO Auto-generated method stub
+		ForkJoinPool pool = new ForkJoinPool();
+		List<Direction> result = pool.invoke(new MazeSolveTask(maze.getStart(), 0));
+		pool.shutdown();
+		return result;
+	}
+
+    
+ }

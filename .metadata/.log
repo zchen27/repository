@@ -1758,3 +1758,354 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2016-04-04 20:20:54.260 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui.workbench 4 2 2016-04-04 20:21:27.159
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.workbench".
+!STACK 0
+java.lang.IllegalStateException: The profile is currently in use.
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.internalGetProfileStateProperties(SimpleProfileRegistry.java:1182)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.getProfileStateProperties(SimpleProfileRegistry.java:1172)
+	at org.eclipse.equinox.internal.p2.ui.sdk.scheduler.migration.MigrationSupport.isFirstTimeRunningThisSharedInstance(MigrationSupport.java:133)
+	at org.eclipse.equinox.internal.p2.ui.sdk.scheduler.migration.MigrationSupport.performMigration(MigrationSupport.java:54)
+	at org.eclipse.equinox.internal.p2.ui.sdk.scheduler.AutomaticUpdateScheduler.earlyStartup(AutomaticUpdateScheduler.java:90)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:90)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:68)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$56.run(Workbench.java:2812)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.ui 4 4 2016-04-04 20:21:27.562
+!MESSAGE Unhandled Exception
+
+!ENTRY org.eclipse.equinox.p2.ui.sdk.scheduler 4 0 2016-04-04 20:21:27.563
+!MESSAGE Unable to execute early startup code for an extension
+!STACK 0
+java.lang.IllegalStateException: The profile is currently in use.
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.internalGetProfileStateProperties(SimpleProfileRegistry.java:1182)
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.getProfileStateProperties(SimpleProfileRegistry.java:1172)
+	at org.eclipse.equinox.internal.p2.ui.sdk.scheduler.migration.MigrationSupport.isFirstTimeRunningThisSharedInstance(MigrationSupport.java:133)
+	at org.eclipse.equinox.internal.p2.ui.sdk.scheduler.migration.MigrationSupport.performMigration(MigrationSupport.java:54)
+	at org.eclipse.equinox.internal.p2.ui.sdk.scheduler.AutomaticUpdateScheduler.earlyStartup(AutomaticUpdateScheduler.java:90)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:90)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:68)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$56.run(Workbench.java:2812)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-04 20:21:28.256
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.oomph.setup.core 2 0 2016-04-04 20:21:55.615
+!MESSAGE Profile C__Users_Me_eclipse_java-mars_eclipse is not current. Expected timestamp 0 but was 0.
+!STACK 0
+java.lang.IllegalStateException: Profile C__Users_Me_eclipse_java-mars_eclipse is not current. Expected timestamp 0 but was 0.
+	at org.eclipse.equinox.internal.p2.engine.SimpleProfileRegistry.lockProfile(SimpleProfileRegistry.java:850)
+	at org.eclipse.equinox.internal.p2.engine.Engine.perform(Engine.java:67)
+	at org.eclipse.equinox.internal.p2.engine.Engine.perform(Engine.java:44)
+	at org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper.executePlan(PlanExecutionHelper.java:42)
+	at org.eclipse.oomph.p2.internal.core.ProfileTransactionImpl$3.commit(ProfileTransactionImpl.java:520)
+	at org.eclipse.oomph.p2.internal.core.ProfileTransactionImpl.commit(ProfileTransactionImpl.java:329)
+	at org.eclipse.oomph.setup.p2.impl.P2TaskImpl.perform(P2TaskImpl.java:729)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.doPerformNeededSetupTasks(SetupTaskPerformer.java:3028)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.access$1(SetupTaskPerformer.java:2972)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer$WorkspaceUtil$1.run(SetupTaskPerformer.java:4152)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer$WorkspaceUtil.performNeededSetupTasks(SetupTaskPerformer.java:4146)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer$WorkspaceUtil.access$0(SetupTaskPerformer.java:4144)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.performNeededSetupTasks(SetupTaskPerformer.java:2963)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.performTriggeredSetupTasks(SetupTaskPerformer.java:2938)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.perform(SetupTaskPerformer.java:2829)
+	at org.eclipse.oomph.setup.ui.wizards.ProgressPage$9.run(ProgressPage.java:552)
+	at org.eclipse.oomph.setup.ui.wizards.ProgressPage$11$1.run(ProgressPage.java:671)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SESSION 2016-04-04 20:55:18.134 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-04 20:55:40.518
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.recommenders.types.rcp 1 3 2016-04-05 01:14:29.159
+!MESSAGE Full project indexing required:
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\charsets.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\access-bridge-64.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\cldrdata.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\dnsns.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\jaccess.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\jfxrt.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\localedata.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\nashorn.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\sunec.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\sunjce_provider.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\sunmscapi.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\sunpkcs11.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\ext\zipfs.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\jce.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\jfr.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\jsse.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\resources.jar
+  [+] C:\Program Files\Java\jre1.8.0_60\lib\rt.jar
+  [+] C:\Users\Me\.p2\pool\plugins\org.hamcrest.core_1.3.0.v201303031735.jar
+  [+] C:\Users\Me\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar
+
+!STACK 0
+org.eclipse.recommenders.utils.Logs$LogTraceException
+	at org.eclipse.recommenders.utils.Logs$LogTraceException.newTrace(Logs.java:381)
+	at org.eclipse.recommenders.utils.Logs.log(Logs.java:134)
+	at org.eclipse.recommenders.internal.types.rcp.ProjectTypesIndex.needsRebuild(ProjectTypesIndex.java:170)
+	at org.eclipse.recommenders.internal.types.rcp.ProjectTypesIndex.startUp(ProjectTypesIndex.java:126)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+!SESSION 2016-04-05 21:19:02.133 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-05 21:19:40.024
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.mpc.ui 1 0 2016-04-05 23:08:43.977
+!MESSAGE Performing Marketplace install request from http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1403812
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-05 23:08:52.238
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/content.jar
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-05 23:09:59.306
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/content.jar
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-05 23:10:03.990
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/artifacts.jar
+
+!ENTRY org.eclipse.epp.mpc.ui 1 0 2016-04-05 23:10:33.801
+!MESSAGE Performing Marketplace install request from http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1827835
+!SESSION 2016-04-05 23:11:49.469 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -data file:/C:/Users/Me/Documents/GitHub/repository/ -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-05 23:12:03.984
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.ui 4 4 2016-04-05 23:13:55.227
+!MESSAGE Conflicting handlers for org.eclipse.ui.navigate.backwardHistory: {ActionHandler(org.eclipse.ui.internal.NavigationHistoryAction@1c53bd49)} vs {ActionHandler(org.eclipse.ui.internal.dialogs.PreferencePageHistory$1@6b28d4e4)}
+!SESSION 2016-04-07 21:22:41.401 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2016-04-07 21:22:59.370
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-07 21:23:29.301
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.mpc.ui 1 0 2016-04-08 08:53:41.440
+!MESSAGE Performing Marketplace install request from http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=421
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-08 08:54:44.562
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/content.jar
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-08 08:54:58.115
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/artifacts.jar
+!SESSION 2016-04-08 08:56:53.597 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -data file:/C:/Users/Me/Documents/GitHub/repository/ -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2016-04-08 08:57:23.333
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-08 08:57:23.333
+!MESSAGE A conflict occurred for CTRL+F4:
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.eclipse.ui.file.close,Close,
+		Close the active editor,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@48405f04,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.scala.tools.eclipse.search.commands.OpenTypeHierarchy,Open Type Hierarchy,
+		Open Type Hierarchy,
+		Category(org.scala.tools.eclipse.search.commands,Search - Scala,Search - Scala,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2a7af3d9,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-08 08:57:47.606
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-08 08:58:19.118
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/content.jar
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-08 08:58:26.670
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/artifacts.jar
+
+!ENTRY org.eclipse.equinox.p2.touchpoint.natives 2 0 2016-04-08 08:59:45.616
+!MESSAGE Could not remove temporary backup directory (it is safe to manually delete it and its contents): C:\Users\Me\AppData\Local\Temp\C__Users_Me_eclipse_java-mars_eclipse_2a7ebe9e2240_a6df6b5c58e
+!SESSION 2016-04-08 09:00:02.014 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -data file:/C:/Users/Me/Documents/GitHub/repository/ -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2016-04-08 09:00:20.581
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-08 09:00:20.581
+!MESSAGE A conflict occurred for CTRL+F4:
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.eclipse.ui.file.close,Close,
+		Close the active editor,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@12a96a6e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.scala.tools.eclipse.search.commands.OpenTypeHierarchy,Open Type Hierarchy,
+		Open Type Hierarchy,
+		Category(org.scala.tools.eclipse.search.commands,Search - Scala,Search - Scala,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@18e8003a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-08 09:00:34.166
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.mpc.ui 1 0 2016-04-08 09:01:58.474
+!MESSAGE Performing Marketplace install request from http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1336
+
+!ENTRY org.eclipse.epp.mpc.ui 1 0 2016-04-08 09:02:14.484
+!MESSAGE Performing Marketplace install request from http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1336
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2016-04-08 09:02:44.645
+!MESSAGE Server returned lastModified <= 0 for https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite/content.jar
+!SESSION 2016-04-11 10:37:03.505 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2016-04-11 10:41:25.783
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-11 10:41:25.783
+!MESSAGE A conflict occurred for CTRL+F4:
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.eclipse.ui.file.close,Close,
+		Close the active editor,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@285cf30a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.scala.tools.eclipse.search.commands.OpenTypeHierarchy,Open Type Hierarchy,
+		Open Type Hierarchy,
+		Category(org.scala.tools.eclipse.search.commands,Search - Scala,Search - Scala,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7e37cfcf,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-11 10:41:52.177
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2016-04-12 13:17:21.779 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2016-04-12 13:18:05.819
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-12 13:18:05.819
+!MESSAGE A conflict occurred for CTRL+F4:
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.eclipse.ui.file.close,Close,
+		Close the active editor,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@ee3a026,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+F4,
+	ParameterizedCommand(Command(org.scala.tools.eclipse.search.commands.OpenTypeHierarchy,Open Type Hierarchy,
+		Open Type Hierarchy,
+		Category(org.scala.tools.eclipse.search.commands,Search - Scala,Search - Scala,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@bd62a6e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-12 13:18:31.247
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Me'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.ui 4 4 2016-04-12 14:10:13.921
+!MESSAGE Conflicting handlers for org.eclipse.ui.navigate.backwardHistory: {ActionHandler(org.eclipse.ui.internal.dialogs.PreferencePageHistory$1@57423c69)} vs {ActionHandler(org.eclipse.ui.internal.NavigationHistoryAction@fbb41e5)}
