@@ -1,9 +1,9 @@
-dtdComment=\#FFFFFF | \#222222 | null | null | null | null
-dtdData=\#CFBFAD | \#222222 | null | null | null | null
-dtdDefault=\#CFBFAD | \#222222 | null | null | null | null
-dtdKeyword=\#FF007F | \#222222 | null | null | null | null
-dtdString=\#ECE47E | \#222222 | null | null | null | null
-dtdSymbol=\#CFBFAD | \#222222 | null | null | null | null
-dtdTag=\#CFBFAD | \#222222 | null | null | null | null
-dtdTagName=\#CFBFAD | \#222222 | null | null | null | null
+dtdComment=\#FF9900 | \#FFFFFF | null | null | null | null
+dtdData=\#333333 | \#FFFFFF | null | null | null | null
+dtdDefault=\#333333 | \#FFFFFF | null | null | null | null
+dtdKeyword=\#0000FF | \#FFFFFF | null | null | null | null
+dtdString=\#CC0000 | \#FFFFFF | null | null | null | null
+dtdSymbol=\#000099 | \#FFFFFF | null | null | null | null
+dtdTag=\#000099 | \#FFFFFF | null | null | null | null
+dtdTagName=\#000099 | \#FFFFFF | null | null | null | null
 eclipse.preferences.version=1
