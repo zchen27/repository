@@ -37,7 +37,7 @@ org.eclipse.jdt.ui.text.code_templates_migrated=true
 org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
 org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
 org.eclipse.jdt.ui.text.templates_migrated=true
-org.eclipse.jface.textfont=1|Courier Prime Code|9.75|0|WINDOWS|1|-13|0|0|0|400|0|0|0|0|3|2|1|49|Courier Prime Code;
+org.eclipse.jface.textfont=1|Inconsolata|11.25|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|49|Inconsolata;
 pf_coloring_argument=0,0,255
 pf_coloring_assignment=51,51,51
 pf_coloring_comment=255,153,0
