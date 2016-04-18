@@ -17,4 +17,5 @@
 <fullyQualifiedTypeName name="java.util.concurrent.Future"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ExecutionException"/>
 <fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
+<fullyQualifiedTypeName name="cmsc433.p4.messages.ConsActorResultMessage"/>
 </qualifiedTypeNameHistroy>

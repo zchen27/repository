@@ -4,6 +4,7 @@ import akka.actor.ActorContext;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
+import cmsc433.p4.messages.ConsActorResultMessage;
 
 /**
  * Class of actors corresponding to cons ("internal") nodes in applicative
@@ -60,9 +61,13 @@ public class ConsActor extends UntypedActor
 	public static void makeAndDeliver(Integer head, ActorRef tail,
 			ActorRef destination, ActorContext context)
 	{
-
+		
 		// Fill in your implementation here
-
+		
+		ConsActor cons = new ConsActor(head, tail);
+		cons.referenceCount++;
+		
+		destination.tell(new ConsActorResultMessage(), sender);
 	}
 
 	@Override
