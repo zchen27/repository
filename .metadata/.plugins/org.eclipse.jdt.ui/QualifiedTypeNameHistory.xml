@@ -18,4 +18,10 @@
 <fullyQualifiedTypeName name="java.util.concurrent.ExecutionException"/>
 <fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
 <fullyQualifiedTypeName name="cmsc433.p4.messages.ConsActorResultMessage"/>
+<fullyQualifiedTypeName name="cmsc433.p4.support.IntegerCollector"/>
+<fullyQualifiedTypeName name="cmsc433.p4.messages.NullStatusRequestMessage"/>
+<fullyQualifiedTypeName name="cmsc433.p4.messages.CollectRequestMessage"/>
+<fullyQualifiedTypeName name="cmsc433.p4.messages.MapProcessingStartMessage"/>
+<fullyQualifiedTypeName name="cmsc433.p4.support.IntegerCompute"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

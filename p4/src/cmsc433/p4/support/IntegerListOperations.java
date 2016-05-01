@@ -67,8 +67,9 @@ public class IntegerListOperations
 		}
 		catch (Exception e)
 		{
-			System.out.println(e);
 			System.out.println("Error in nil()");
+			e.printStackTrace(System.out);
+			
 			return null;
 		}
 	}
@@ -94,8 +95,9 @@ public class IntegerListOperations
 		}
 		catch (Exception e)
 		{
-			System.out.println(e.toString());
+			
 			System.out.println("Error in cons()");
+			e.printStackTrace(System.out);
 			return null;
 		}
 	}
@@ -121,6 +123,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in isNull()");
+			e.printStackTrace(System.out);;
 			return null;
 		}
 	}
@@ -145,6 +148,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in head()");
+			e.printStackTrace(System.out);;
 			return null;
 		}
 
@@ -171,6 +175,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in tail()");
+			e.printStackTrace(System.out);;
 			return null;
 		}
 	}
@@ -195,6 +200,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in getReferenceCount()");
+			e.printStackTrace(System.out);;
 			return null;
 		}
 	}
@@ -230,6 +236,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in tail()");
+			e.printStackTrace(System.out);;
 			return null;
 		}
 	}
@@ -259,6 +266,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in collect()");
+			e.printStackTrace(System.out);;
 			return null;
 
 		}
@@ -287,6 +295,7 @@ public class IntegerListOperations
 		catch (Exception e)
 		{
 			System.out.println("Error in map()");
+			e.printStackTrace(System.out);;
 			return null;
 
 		}
